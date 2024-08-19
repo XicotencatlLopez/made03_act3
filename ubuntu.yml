@@ -16,6 +16,7 @@
         shell: /bin/bash
         password: "{ {'Password1'} | password_hash('sha512') }}"
         update_password: on_create
+
     - name: sshd password
       lineinfile:
         path: /etc/ssh/sshd_config
@@ -23,8 +24,50 @@
         insertafter: '#PasswordAuthentication'
         line: 'PasswordAuthentication yes'
       notify: restart_sshd
+
     - name: Add sudo rights for tux
       copy:
         dest: /etc/sudoers.d/tux
         content: "tux ALL=(root) NOPASSWD: ALL"
         backup: true
+
+    - name: Get first random user data from API
+      uri:
+        url: https://random-data-api.com/api/users/random_user?size=1
+        return_content: yes
+      register: user_data1
+
+    - name: Wait for a few seconds before the next API call
+      pause:
+        seconds: 5
+
+    - name: Get second random user data from API
+      uri:
+        url: https://random-data-api.com/api/users/random_user?size=1
+        return_content: yes
+      register: user_data2
+
+    - name: Create partido.txt with API data
+      copy:
+        dest: /vagrant/partido.txt
+        content: |
+          First Name: {{ user_data1.json[0].first_name }}
+          Last Name: {{ user_data1.json[0].last_name }}
+          City: {{ user_data1.json[0].address.city }}
+          id: {{ user_data1.json[0].id }}
+
+          First Name: {{ user_data2.json[0].first_name }}
+          Last Name: {{ user_data2.json[0].last_name }}
+          City: {{ user_data2.json[0].address.city }}
+          id: {{ user_data2.json[0].id }}
+
+          Fecha: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+    - name: Print partido.txt content
+      command: cat /vagrant/partido.txt
+      register: partido_content
+      ignore_errors: yes
+
+    - name: Show partido.txt content
+      debug:
+        msg: "{{ partido_content.stdout }}"
