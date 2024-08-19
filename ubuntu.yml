@@ -3,11 +3,13 @@
   hosts: all
   gather_facts: true
   become: true
+
   handlers:
   - name: restart_sshd
     service:
       name: sshd
       state: restarted
+      
   tasks:
     - name: create user
       user:
