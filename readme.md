@@ -1,6 +1,11 @@
+#  **Desarrollo práctico: Asembli + Vagrant + Vbox**
+__Saul Xicotencatl Lopez - madeo03_act3__
+
 # Estructura de carpetas
+
 ## Host: Pop_os!, Debian Linux Distro
 Se utilizó la siguiente estructura de carpetas en la maquina host tipo linux
+
     wm_ubuntu/
     ├── .vagrant/ 
     │   └── bundler/
@@ -17,13 +22,14 @@ En el caso de *.vagrant* y *ubuntu-bionic-18.04-cloudimg-console.log* no se carg
 
 ## VM: Bionic Ubuntu for Vbox, Debian Linux Distro
 Se utilizó la siguiente estructura de carpetas en la maquina host tipo linux
-home/
-└── tux/
-│   └── ...
-└── ubuntu/
-│   └── ...
-└── vagrant/
-    └── partido.txt
+
+    home/
+    └── tux/
+    │   └── ...
+    └── ubuntu/
+    │   └── ...
+    └── vagrant/
+        └── partido.txt
 
 
 # Instalción de componentes
@@ -60,8 +66,21 @@ Es posible re-ejecutar los cambios del pĺaybook.yml utilzando **vagrant provisi
 
 Cuando la maquina virtual de Ubuntu este ejecutando correctamente, es posible acceder con **vagrant ssh** e imprmir contenido ejecutando *cat /vagrant/partido.txt*.
 
-Con *exit* se corta la comunicación con la VM y **vagrant halt** se apaga sin destruirlo. Cualquier estatus puede ser verificado simultanemaente con la terminal o el gestor grafico de vbox 
+Ejempo:
 
+    First Name: Barton
+    Last Name: Ortiz
+    City: Lake Humberto
+    id: 1909
+
+    First Name: Karren
+    Last Name: Hand
+    City: Crookshaven
+    id: 752
+
+    Fecha: 2024-08-19 05:17:46
+
+Con *exit* se corta la comunicación con la VM y **vagrant halt** se apaga sin destruirlo. Cualquier estatus puede ser verificado simultanemaente con la terminal o el gestor grafico de vbox 
 
 
 # Ligas de interes
