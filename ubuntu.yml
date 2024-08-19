@@ -47,9 +47,15 @@
         return_content: yes
       register: user_data2
 
+    - name: Create directory for partido.txt
+      file:
+        path: /home/vagrant/
+        state: directory
+        mode: '0755'
+
     - name: Create partido.txt with API data
       copy:
-        dest: /vagrant/partido.txt
+        dest: /home/vagrant/partido.txt
         content: |
           First Name: {{ user_data1.json[0].first_name }}
           Last Name: {{ user_data1.json[0].last_name }}
@@ -64,7 +70,7 @@
           Fecha: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
 
     - name: Print partido.txt content
-      command: cat /vagrant/partido.txt
+      command: cat /home/vagrant/partido.txt
       register: partido_content
       ignore_errors: yes
 
